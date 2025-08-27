@@ -21,7 +21,7 @@
     "zustand": "^4.4.0",
     "react-hot-toast": "^2.4.1",
     "react-confetti": "^6.1.0",
-    "react-sound": "^1.2.0",
+    "use-sound": "^4.0.1",
     "react-use": "^17.3.2"
   },
   "devDependencies": {
