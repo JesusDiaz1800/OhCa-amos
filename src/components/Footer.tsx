@@ -11,13 +11,13 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 bg-clip-text text-transparent mb-4"
+              className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent mb-4"
             >
-              🍺 Previa Mundial
+              🍺 ¡Oh Cañamos?
             </motion.div>
             <p className="text-white/80 mb-4">
-              La aplicación de juegos para beber definitiva con alma boliviana. 
-              ¡Anima cualquier fiesta con nuestros juegos clásicos y contenido cultural único!
+              La app #1 para la fiesta más divertida y viral. 
+              ¡Anima cualquier celebración con nuestros juegos clásicos y contenido único!
             </p>
             <div className="flex items-center space-x-2 text-sm text-white/60">
               <span>Hecho con</span>

@@ -392,7 +392,7 @@ const About = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
-            onClick={() => navigate('/game/pre')}
+                            onClick={() => navigate('/mode-selector')}
             className="btn-primary"
           >
             ¡Empezar a Jugar!

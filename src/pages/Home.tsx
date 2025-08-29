@@ -1,3 +1,4 @@
+import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { 
@@ -15,11 +16,14 @@ import {
   Flame,
   Beer,
   Wine,
-  Cocktail,
   Target,
   Brain,
   Music,
-  Camera
+  Camera,
+  Flag,
+  MapPin,
+  PartyPopper,
+  GamepadIcon
 } from 'lucide-react'
 import { gameModes, gameTypes } from '../data/gameData'
 
@@ -63,12 +67,12 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-6"
           >
-            <div className="text-8xl md:text-9xl mb-4 animate-bounce-slow">🎉</div>
-                           <h1 className="text-6xl md:text-8xl font-bold mb-6">
-                 <span className="text-gradient neon-text">
-                   ¡Oh Cañamos?
-                 </span>
-               </h1>
+            <div className="text-8xl md:text-9xl mb-4 animate-bounce-slow">🍺</div>
+            <h1 className="text-6xl md:text-8xl font-black mb-6">
+              <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse">
+                ¡Oh Cañamos?
+              </span>
+            </h1>
           </motion.div>
           
           <motion.p 
@@ -77,8 +81,8 @@ const Home = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            La aplicación de juegos para beber más{' '}
-            <span className="font-bold text-yellow-400 animate-pulse neon-yellow">divertida y viral</span>
+            La app #1 para la fiesta más{' '}
+            <span className="font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent animate-pulse">divertida y viral</span>
           </motion.p>
           
           <motion.div 
@@ -87,7 +91,7 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <Link to="/game-engine">
+            <Link to="/mode-selector">
               <motion.button
                 whileHover={{ scale: 1.05, rotate: 2 }}
                 whileTap={{ scale: 0.95 }}
@@ -95,239 +99,288 @@ const Home = () => {
               >
                 <Play size={28} />
                 <span>¡Empezar a Jugar!</span>
-                <Zap size={24} />
-                <Sparkles size={20} />
-              </motion.button>
-            </Link>
-            
-            <Link to="/bolivia">
-              <motion.button
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-bolivia text-xl px-10 py-5 flex items-center space-x-3 shadow-2xl hover:shadow-3xl"
-              >
-                <Globe size={28} />
-                <span>Modo Bolivia</span>
-                <Crown size={24} />
+                <ArrowRight size={24} />
               </motion.button>
             </Link>
           </motion.div>
+        </motion.div>
+      </section>
 
-          {/* Stats */}
+      {/* Game Modes Section */}
+      <section className="py-16">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto px-4"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="flex justify-center items-center space-x-8 mt-12"
+            variants={itemVariants}
+            className="text-center mb-12"
           >
-            <div className="text-center">
-              <div className="text-3xl font-bold neon-yellow">500+</div>
-              <div className="text-sm text-white/70">Preguntas</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold neon-pink">12+</div>
-              <div className="text-sm text-white/70">Juegos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold neon-purple">∞</div>
-              <div className="text-sm text-white/70">Diversión</div>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Features */}
-      <section className="py-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          <motion.div variants={itemVariants} className="card text-center hover:scale-105 transition-transform">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl glow-cyan">
-              <Users className="text-white" size={40} />
-            </div>
-            <h3 className="text-2xl font-bold mb-3 neon-cyan">Multiplayer</h3>
-            <p className="text-white/80 text-lg">
-              Juega con amigos en tiempo real. Todos ven el mismo contenido simultáneamente.
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-gradient">Elige tu Modo de Fiesta</span>
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Dos experiencias únicas para hacer de tu noche algo inolvidable
             </p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="card text-center hover:scale-105 transition-transform">
-            <div className="w-20 h-20 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl glow-pink">
-              <Sparkles className="text-white" size={40} />
-            </div>
-            <h3 className="text-2xl font-bold mb-3 neon-pink">Contenido Único</h3>
-            <p className="text-white/80 text-lg">
-              Más de 500 preguntas y retos, incluyendo contenido exclusivo boliviano.
-            </p>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="card text-center hover:scale-105 transition-transform">
-            <div className="w-20 h-20 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl glow-orange">
-              <Heart className="text-white" size={40} />
-            </div>
-            <h3 className="text-2xl font-bold mb-3 neon-orange">Cultura Local</h3>
-            <p className="text-white/80 text-lg">
-              Juegos tradicionales como Paco y Picolo, con jergas y bebidas bolivianas.
-            </p>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Game Modes */}
-      <section className="py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-5xl font-bold mb-4 text-gradient neon-text">
-            Modos de Fiesta
-          </h2>
-          <p className="text-xl text-white/80">
-            Elige el modo que mejor se adapte a tu ambiente
-          </p>
-        </motion.div>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {gameModes.slice(0, 6).map((mode) => (
-            <motion.div key={mode.id} variants={itemVariants}>
-              <Link to={`/game/${mode.id}`}>
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -5, rotate: 1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`game-card ${mode.color} relative overflow-hidden shadow-2xl hover:shadow-3xl`}
-                >
-                  <div className="text-6xl mb-4 animate-bounce-slow">{mode.icon}</div>
-                  <h3 className="text-2xl font-bold mb-3">{mode.name}</h3>
-                  <p className="text-base opacity-90 mb-4">{mode.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm bg-white/20 px-3 py-1 rounded-full font-medium">
-                      {mode.minPlayers}-{mode.maxPlayers} jugadores
-                    </span>
-                    <ArrowRight size={24} className="animate-pulse" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Modo Clásico */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 rounded-3xl p-8 border-2 border-blue-400/30 relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10"></div>
+              <div className="relative z-10">
+                <div className="text-center mb-6">
+                  <div className="text-6xl mb-4">🎮</div>
+                  <h3 className="text-3xl font-bold mb-3 text-white">Modo Clásico</h3>
+                  <p className="text-lg text-white/80">Experiencia Universal</p>
+                </div>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <Star size={20} className="text-blue-400" />
+                    <span>Juegos universales y divertidos</span>
                   </div>
-                </motion.div>
-              </Link>
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <Zap size={20} className="text-blue-400" />
+                    <span>Retos para todos los gustos</span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <Trophy size={20} className="text-blue-400" />
+                    <span>Experiencia probada y confiable</span>
+                  </div>
+                </div>
+
+                <Link to="/mode-selector?mode=classic">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:shadow-2xl text-white font-bold py-4 px-6 rounded-2xl text-center transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-center space-x-3">
+                      <Gamepad2 size={24} />
+                      <span>¡Empezar Clásico!</span>
+                      <ArrowRight size={20} />
+                    </div>
+                  </motion.button>
+                </Link>
+              </div>
             </motion.div>
-          ))}
+
+            {/* Modo Bolivia */}
+            <motion.div
+              variants={itemVariants}
+              whileHover={{ scale: 1.02 }}
+              className="bg-gradient-to-br from-yellow-900 via-orange-800 to-red-900 rounded-3xl p-8 border-2 border-yellow-400/30 relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10"></div>
+              <div className="relative z-10">
+                <div className="text-center mb-6">
+                  <div className="text-6xl mb-4">🇧🇴</div>
+                  <h3 className="text-3xl font-bold mb-3 text-white">Modo Bolivia</h3>
+                  <p className="text-lg text-white/80">Sabor Local Auténtico</p>
+                </div>
+                
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <Flag size={20} className="text-yellow-400" />
+                    <span>Modismos y referencias bolivianas</span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <Heart size={20} className="text-yellow-400" />
+                    <span>Humor criollo y local</span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-white/90">
+                    <MapPin size={20} className="text-yellow-400" />
+                    <span>Experiencia cultural única</span>
+                  </div>
+                </div>
+
+                <Link to="/mode-selector?mode=bolivia">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:shadow-2xl text-white font-bold py-4 px-6 rounded-2xl text-center transition-all duration-300"
+                  >
+                    <div className="flex items-center justify-center space-x-3">
+                      <Flag size={24} />
+                      <span>¡Empezar Bolivia!</span>
+                      <ArrowRight size={20} />
+                    </div>
+                  </motion.button>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       </section>
 
-      {/* Game Types */}
+      {/* Features Section */}
       <section className="py-16">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-5xl font-bold mb-4 text-gradient neon-text">
-            Tipos de Juegos
-          </h2>
-          <p className="text-xl text-white/80">
-            Clásicos reinventados y juegos únicos bolivianos
-          </p>
-        </motion.div>
-
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="max-w-6xl mx-auto px-4"
         >
-          {gameTypes.slice(0, 9).map((game) => (
-            <motion.div key={game.id} variants={itemVariants}>
-              <Link to={`/play/${game.id}`}>
-                <motion.div
-                  whileHover={{ scale: 1.05, y: -5, rotate: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="card hover:shadow-3xl transition-all duration-300 border-2 border-white/10"
-                >
-                  <div className="text-6xl mb-4 animate-float">{game.icon}</div>
-                  <h3 className="text-2xl font-bold mb-3 text-white">{game.name}</h3>
-                  <p className="text-white/80 mb-4 text-lg">
-                    {game.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {game.variations.slice(0, 3).map((variation, index) => (
-                      <span
-                        key={index}
-                        className="text-xs bg-gradient-to-r from-pink-500 to-purple-500 text-white px-3 py-1 rounded-full font-medium"
-                      >
-                        {variation}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-white/60">
-                      {game.rules.length} reglas
-                    </span>
-                    <ArrowRight size={20} className="text-pink-400 animate-pulse" />
-                  </div>
-                </motion.div>
-              </Link>
+          <motion.div
+            variants={itemVariants}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-gradient">Características Principales</span>
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Todo lo que necesitas para la mejor fiesta de tu vida
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <motion.div
+              variants={itemVariants}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-2xl p-6 border border-purple-400/30">
+                <div className="text-4xl mb-4">🎲</div>
+                <h3 className="text-xl font-bold mb-3 text-white">Juegos Aleatorios</h3>
+                <p className="text-white/80">
+                  Cada partida es única con selección aleatoria de juegos y turnos dinámicos
+                </p>
+              </div>
             </motion.div>
-          ))}
+
+            <motion.div
+              variants={itemVariants}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-blue-900 to-cyan-900 rounded-2xl p-6 border border-blue-400/30">
+                <div className="text-4xl mb-4">⚡</div>
+                <h3 className="text-xl font-bold mb-3 text-white">Turnos Dinámicos</h3>
+                <p className="text-white/80">
+                  Los jugadores se seleccionan aleatoriamente para mantener la emoción
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className="text-center"
+            >
+              <div className="bg-gradient-to-br from-green-900 to-emerald-900 rounded-2xl p-6 border border-green-400/30">
+                <div className="text-4xl mb-4">🎯</div>
+                <h3 className="text-xl font-bold mb-3 text-white">Retos Variados</h3>
+                <p className="text-white/80">
+                  Desde preguntas suaves hasta retos intensos para todos los niveles
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Games Preview Section */}
+      <section className="py-16">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="max-w-6xl mx-auto px-4"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="text-center mb-12"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-gradient">Juegos Disponibles</span>
+            </h2>
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Una colección completa de juegos para hacer tu fiesta inolvidable
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {gameTypes.slice(0, 6).map((gameType, index) => (
+              <motion.div
+                key={gameType.id}
+                variants={itemVariants}
+                whileHover={{ scale: 1.05 }}
+                className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20"
+              >
+                <div className="text-3xl mb-2">{gameType.icon}</div>
+                <h3 className="font-semibold text-white text-sm">{gameType.name}</h3>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 text-white rounded-3xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
+      <section className="py-16">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto relative z-10"
+          className="max-w-4xl mx-auto px-4 text-center"
         >
-          <h2 className="text-5xl font-bold mb-6 neon-text">
-            ¿Listo para la mejor fiesta de tu vida?
-          </h2>
-          <p className="text-2xl mb-10 opacity-90">
-            Únete a miles de personas que ya están disfrutando de Previa Mundial
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link to="/game-engine">
-              <motion.button
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-white text-purple-600 font-bold py-5 px-10 rounded-2xl hover:bg-gray-100 transition-colors text-xl shadow-2xl"
-              >
-                <div className="flex items-center space-x-3">
-                  <Gamepad2 size={28} />
+          <motion.div
+            variants={itemVariants}
+            className="bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 rounded-3xl p-12 border-2 border-purple-400/30"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              <span className="text-gradient">¿Listo para la Fiesta?</span>
+            </h2>
+            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+              Únete a miles de personas que ya han hecho de sus noches algo extraordinario
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/mode-selector">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-primary text-xl px-10 py-5 flex items-center space-x-3 shadow-2xl hover:shadow-3xl"
+                >
+                  <PartyPopper size={28} />
                   <span>¡Empezar Ahora!</span>
-                  <Zap size={24} />
-                </div>
-              </motion.button>
-            </Link>
-            <Link to="/bolivia">
-              <motion.button
-                whileHover={{ scale: 1.05, rotate: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className="border-3 border-white text-white font-bold py-5 px-10 rounded-2xl hover:bg-white hover:text-purple-600 transition-colors text-xl shadow-2xl"
-              >
-                <div className="flex items-center space-x-3">
-                  <Crown size={28} />
-                  <span>Descubrir Bolivia</span>
-                  <Star size={24} />
-                </div>
-              </motion.button>
-            </Link>
+                  <ArrowRight size={24} />
+                </motion.button>
+              </Link>
+              
+              <Link to="/test">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-lg px-8 py-5 rounded-2xl flex items-center space-x-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
+                >
+                  <span className="text-2xl">🧪</span>
+                  <span>Probar Sistema</span>
+                </motion.button>
+              </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Consumption Warning */}
+      <section className="py-8">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="max-w-4xl mx-auto px-4 text-center"
+        >
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
+            <p className="text-white/70 text-lg">
+              🍺 <strong>Consumo Responsable:</strong> La diversión es mejor cuando se disfruta con moderación
+            </p>
           </div>
         </motion.div>
       </section>

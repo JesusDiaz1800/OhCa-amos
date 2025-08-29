@@ -23,7 +23,6 @@ const Header = () => {
 
   const navigation = [
     { name: 'Inicio', href: '/', icon: Home },
-    { name: 'Modos', href: '/game/pre', icon: Gamepad2 },
     { name: 'Bolivia', href: '/bolivia', icon: Users },
     { name: 'Configuración', href: '/settings', icon: Settings },
     { name: 'Acerca de', href: '/about', icon: Info },
@@ -43,7 +42,7 @@ const Header = () => {
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-orange-500 bg-clip-text text-transparent"
+              className="text-2xl font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent"
             >
               🍺 ¡Oh Cañamos?
             </motion.div>

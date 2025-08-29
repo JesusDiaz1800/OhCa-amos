@@ -40,6 +40,32 @@ interface GameStore extends GameState {
   resetGame: () => void
 }
 
+// Función segura para localStorage
+const safeLocalStorage = {
+  getItem: (key: string): string | null => {
+    try {
+      return localStorage.getItem(key)
+    } catch (error) {
+      console.warn('Error accessing localStorage:', error)
+      return null
+    }
+  },
+  setItem: (key: string, value: string): void => {
+    try {
+      localStorage.setItem(key, value)
+    } catch (error) {
+      console.warn('Error setting localStorage:', error)
+      // Limpiar localStorage si está lleno
+      try {
+        localStorage.clear()
+        localStorage.setItem(key, value)
+      } catch (clearError) {
+        console.error('Failed to clear localStorage:', clearError)
+      }
+    }
+  }
+}
+
 export const useGameStore = create<GameStore>()(
   persist(
     (set, get) => ({
@@ -60,11 +86,8 @@ export const useGameStore = create<GameStore>()(
 
       // Actions
       initializeGame: () => {
-        const savedState = localStorage.getItem('previa-mundial-game')
-        if (savedState) {
-          const parsed = JSON.parse(savedState)
-          set(parsed)
-        }
+        // Esta función ya no es necesaria con persist middleware
+        // Zustand se encarga automáticamente de la persistencia
       },
 
       startGame: (gameType: string, mode: string) => {
@@ -162,6 +185,22 @@ export const useGameStore = create<GameStore>()(
         settings: state.settings,
         gameHistory: state.gameHistory,
       }),
+      // Usar storage personalizado para manejar errores
+      storage: {
+        getItem: (name) => {
+          return safeLocalStorage.getItem(name)
+        },
+        setItem: (name, value) => {
+          safeLocalStorage.setItem(name, value)
+        },
+        removeItem: (name) => {
+          try {
+            localStorage.removeItem(name)
+          } catch (error) {
+            console.warn('Error removing from localStorage:', error)
+          }
+        },
+      },
     }
   )
 )
