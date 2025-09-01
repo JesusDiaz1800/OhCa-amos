@@ -212,7 +212,7 @@ const CulturaChupisticaGame: React.FC<CulturaChupisticaGameProps> = ({
   useEffect(() => {
     if (players.length > 0) {
       const initialScores: {[key: string]: number} = {}
-      players.forEach(player => {
+    players.forEach(player => {
         initialScores[player] = 0
       })
       setScore(initialScores)
@@ -458,7 +458,7 @@ const CulturaChupisticaGame: React.FC<CulturaChupisticaGameProps> = ({
               <div className="flex items-center">
                 <Users className="w-5 h-5 mr-2" />
                 <span className="font-semibold">{players[currentPlayerIndex]}</span>
-              </div>
+            </div>
             </div>
           </motion.div>
 

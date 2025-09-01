@@ -272,12 +272,12 @@ const GameEngine: React.FC = () => {
     console.log(`Juego completado. Ronda ${gameState.currentRound} de ${gameState.totalRounds}`)
     
     // Marcar la ronda como completada
-    setGameState(prev => ({
-      ...prev,
-      rounds: prev.rounds.map(round => 
-        round.id === prev.currentRound 
-          ? { ...round, completed: true }
-          : round
+      setGameState(prev => ({
+        ...prev,
+        rounds: prev.rounds.map(round => 
+          round.id === prev.currentRound 
+            ? { ...round, completed: true }
+            : round
       ),
       showGameComponent: false
     }))
@@ -367,8 +367,8 @@ const GameEngine: React.FC = () => {
           >
             Configurar Jugadores
           </button>
-        </div>
-      </div>
+                      </div>
+                  </div>
     )
   }
 
@@ -385,7 +385,7 @@ const GameEngine: React.FC = () => {
           >
             Seleccionar Modo
           </button>
-        </div>
+          </div>
       </div>
     )
   }
@@ -438,7 +438,7 @@ const GameEngine: React.FC = () => {
             <span className="text-lg font-semibold">Inicio</span>
           </button>
         </div>
-
+        
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-1">
             {gameState.isBolivian ? '🇧🇴 Modo Bolivia' : '🎮 Modo Clásico'}
@@ -447,7 +447,7 @@ const GameEngine: React.FC = () => {
             {subMode} • {players.length} jugadores
           </p>
         </div>
-
+        
         <div className="flex items-center gap-3">
           <button
             onClick={toggleSound}
@@ -487,7 +487,7 @@ const GameEngine: React.FC = () => {
                   <h3 className="font-semibold text-white mb-2">Jugadores</h3>
                   {/* Lista de jugadores - ELIMINADO */}
                   {/* Ya no es necesario mostrar contadores de puntuación */}
-                </div>
+                  </div>
                 
                 <div className="bg-white/10 rounded-xl p-4">
                   <h3 className="font-semibold text-white mb-2">Configuración</h3>
@@ -496,8 +496,8 @@ const GameEngine: React.FC = () => {
                     <div>Sonido: {gameState.soundEnabled ? 'Activado' : 'Desactivado'}</div>
                     <div>Modo: {gameState.isBolivian ? 'Bolivia' : 'Clásico'}</div>
                   </div>
-                </div>
-              </div>
+                  </div>
+                  </div>
 
               <button
                 onClick={startGame}
@@ -506,11 +506,11 @@ const GameEngine: React.FC = () => {
                 <Play size={24} />
                 ¡Empezar la Fiesta!
               </button>
-            </div>
+                  </div>
           </motion.div>
         ) : (
           // Juego en progreso
-          <div>
+                  <div>
             {/* Información de la ronda */}
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
@@ -519,13 +519,13 @@ const GameEngine: React.FC = () => {
                 </h2>
                 <div className="text-white/80">
                   {gameState.rounds[gameState.currentRound - 1]?.title}
-                </div>
+                  </div>
                 {gameState.currentGameComponent && (
                   <div className="text-yellow-300 text-sm mt-2">
                     🎮 Juego: {gameState.currentGameComponent.toUpperCase()}
                   </div>
                 )}
-              </div>
+                  </div>
               
               {/* Barra de progreso */}
               <div className="w-full bg-white/20 rounded-full h-2 mb-4">
@@ -550,9 +550,9 @@ const GameEngine: React.FC = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-          </div>
-        )}
-      </div>
+                    </div>
+                  )}
+            </div>
 
       {/* Settings Modal */}
       <AnimatePresence>
@@ -600,7 +600,7 @@ const GameEngine: React.FC = () => {
                     <option value={15}>15</option>
                     <option value={20}>20</option>
                   </select>
-                </div>
+            </div>
               </div>
               
               <button

@@ -23,7 +23,12 @@ import {
   Flag,
   MapPin,
   PartyPopper,
-  GamepadIcon
+  GamepadIcon,
+  TrendingUp,
+  Award,
+  Shield,
+  Clock,
+  Volume2
 } from 'lucide-react'
 import { gameModes, gameTypes } from '../data/gameData'
 
@@ -43,347 +48,471 @@ const Home = () => {
     visible: { opacity: 1, y: 0 }
   }
 
+  const stats = [
+    { icon: Users, value: '10K+', label: 'Jugadores Activos', color: 'from-blue-500 to-cyan-500' },
+    { icon: Trophy, value: '25+', label: 'Juegos Únicos', color: 'from-yellow-500 to-orange-500' },
+    { icon: Star, value: '4.9', label: 'Rating Promedio', color: 'from-purple-500 to-pink-500' },
+    { icon: TrendingUp, value: '100%', label: 'Diversión Garantizada', color: 'from-green-500 to-emerald-500' }
+  ]
+
+  const features = [
+    {
+      icon: Gamepad2,
+      title: 'Experiencia Inmersiva',
+      description: 'Diseño moderno con animaciones fluidas que te transportan a la mejor fiesta',
+      color: 'from-purple-500 to-pink-500'
+    },
+    {
+      icon: Globe,
+      title: 'Cultura Boliviana',
+      description: 'Modismos locales y referencias auténticas que solo los bolivianos entenderán',
+      color: 'from-green-500 to-yellow-500'
+    },
+    {
+      icon: Shield,
+      title: 'Privacidad Total',
+      description: 'Todo se guarda localmente, sin necesidad de internet ni datos personales',
+      color: 'from-blue-500 to-indigo-500'
+    },
+    {
+      icon: Clock,
+      title: 'Configuración Rápida',
+      description: 'En menos de 30 segundos estarás jugando con tus amigos',
+      color: 'from-orange-500 to-red-500'
+    }
+  ]
+
+  const gameCategories = [
+    {
+      title: 'Clásicos Renovados',
+      games: ['Yo Nunca He', 'Verdad o Reto', 'La Botella', 'Bomba Drink'],
+      icon: Crown,
+      color: 'from-yellow-400 to-orange-500'
+    },
+    {
+      title: 'Bolivia Especial',
+      games: ['Cultura Chupística', 'Que Waso', 'El Seco Mojado', 'Modismos Locales'],
+      icon: Flag,
+      color: 'from-green-400 to-yellow-500'
+    },
+    {
+      title: 'Retos Extremos',
+      games: ['Papiro Pico', 'Chimboleo 3000', 'Tomanji', 'Psych!'],
+      icon: Flame,
+      color: 'from-red-400 to-pink-500'
+    }
+  ]
+
   return (
-    <div className="space-y-16">
-      {/* Hero Section */}
+    <div className="space-y-20">
+      {/* Hero Section Mejorado */}
       <section className="text-center py-20 relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-40 h-40 bg-gradient-to-r from-orange-500 to-red-500 rounded-full blur-3xl opacity-15 animate-bounce-slow"></div>
-          <div className="absolute bottom-20 left-1/4 w-36 h-36 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full blur-3xl opacity-20 animate-float"></div>
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full blur-3xl opacity-10 animate-pulse-slow"></div>
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0">
+          <motion.div
+            className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-0 right-1/4 w-96 h-96 bg-red-400/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1.5, 1, 1.5],
+              opacity: [0.6, 0.3, 0.6],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          />
         </div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto relative z-10"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="relative z-10"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-6"
-          >
-            <div className="text-8xl md:text-9xl mb-4 animate-bounce-slow">🍺</div>
-            <h1 className="text-6xl md:text-8xl font-black mb-6">
-              <span className="bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse">
-                ¡Oh Cañamos?
-              </span>
-            </h1>
+          <motion.div variants={itemVariants} className="mb-8">
+            <motion.div
+              className="text-8xl mb-6 inline-block"
+              animate={{
+                y: [0, -10, 0],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              🍺
+            </motion.div>
+            <motion.h1 
+              className="text-6xl md:text-7xl font-black mb-4 bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              style={{
+                backgroundSize: "200% 200%"
+              }}
+            >
+              ¡Oh Cañamos?
+            </motion.h1>
+            <motion.p 
+              className="text-2xl md:text-3xl text-yellow-200 font-bold mb-6"
+              animate={{
+                textShadow: [
+                  "0 0 10px rgba(251, 191, 36, 0.5)",
+                  "0 0 20px rgba(251, 191, 36, 0.8)",
+                  "0 0 10px rgba(251, 191, 36, 0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              La App #1 para la Fiesta Más Viral
+            </motion.p>
+            <motion.p 
+              className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed"
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              ¡Prepárense para una experiencia única que romperá el hielo y 
+              creará momentos que recordarán para siempre!
+            </motion.p>
           </motion.div>
-          
-          <motion.p 
-            className="text-2xl md:text-3xl text-white/90 mb-8 font-medium"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            La app #1 para la fiesta más{' '}
-            <span className="font-bold bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent animate-pulse">divertida y viral</span>
-          </motion.p>
-          
-          <motion.div 
-            className="flex flex-col sm:flex-row gap-6 justify-center"
+
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.div
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/mode-selector"
+                className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-black font-bold py-6 px-12 rounded-full text-2xl shadow-2xl hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 transition-all duration-300 transform hover:-translate-y-2 border-2 border-white/20 overflow-hidden inline-flex items-center gap-3"
+              >
+                {/* Efecto de brillo */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ["-100%", "100%"]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <span className="relative z-10 flex items-center gap-3">
+                  <Play className="w-8 h-8" />
+                  ¡Empezar a Jugar!
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Zap className="w-6 h-6" />
+                  </motion.div>
+                </span>
+              </Link>
+            </motion.div>
+
+            <motion.div
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/test"
+                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white font-bold py-6 px-8 rounded-full text-xl shadow-2xl border border-white/20 transition-all duration-300 transform hover:-translate-y-2 inline-flex items-center gap-3"
+              >
+                <Gamepad2 className="w-6 h-6" />
+                Probar Sistema
+              </Link>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Stats Section Mejorado */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-16"
+      >
+        <div className="text-center mb-12">
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
           >
-            <Link to="/mode-selector">
-              <motion.button
-                whileHover={{ scale: 1.05, rotate: 2 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-primary text-xl px-10 py-5 flex items-center space-x-3 shadow-2xl hover:shadow-3xl"
-              >
-                <Play size={28} />
-                <span>¡Empezar a Jugar!</span>
-                <ArrowRight size={24} />
-              </motion.button>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Game Modes Section */}
-      <section className="py-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-4"
-        >
-          <motion.div
-            variants={itemVariants}
-            className="text-center mb-12"
+            Números que Hablan
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-white/80 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-gradient">Elige tu Modo de Fiesta</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Dos experiencias únicas para hacer de tu noche algo inolvidable
-            </p>
-          </motion.div>
+            La app más descargada y recomendada por miles de usuarios
+          </motion.p>
+        </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Modo Clásico */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {stats.map((stat, index) => (
             <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 rounded-3xl p-8 border-2 border-blue-400/30 relative overflow-hidden"
+              key={stat.label}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 text-center group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-cyan-500/10"></div>
-              <div className="relative z-10">
-                <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">🎮</div>
-                  <h3 className="text-3xl font-bold mb-3 text-white">Modo Clásico</h3>
-                  <p className="text-lg text-white/80">Experiencia Universal</p>
-                </div>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <Star size={20} className="text-blue-400" />
-                    <span>Juegos universales y divertidos</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <Zap size={20} className="text-blue-400" />
-                    <span>Retos para todos los gustos</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <Trophy size={20} className="text-blue-400" />
-                    <span>Experiencia probada y confiable</span>
-                  </div>
-                </div>
-
-                <Link to="/mode-selector?mode=classic">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:shadow-2xl text-white font-bold py-4 px-6 rounded-2xl text-center transition-all duration-300"
-                  >
-                    <div className="flex items-center justify-center space-x-3">
-                      <Gamepad2 size={24} />
-                      <span>¡Empezar Clásico!</span>
-                      <ArrowRight size={20} />
-                    </div>
-                  </motion.button>
-                </Link>
-              </div>
-            </motion.div>
-
-            {/* Modo Bolivia */}
-            <motion.div
-              variants={itemVariants}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gradient-to-br from-yellow-900 via-orange-800 to-red-900 rounded-3xl p-8 border-2 border-yellow-400/30 relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10"></div>
-              <div className="relative z-10">
-                <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">🇧🇴</div>
-                  <h3 className="text-3xl font-bold mb-3 text-white">Modo Bolivia</h3>
-                  <p className="text-lg text-white/80">Sabor Local Auténtico</p>
-                </div>
-                
-                <div className="space-y-4 mb-8">
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <Flag size={20} className="text-yellow-400" />
-                    <span>Modismos y referencias bolivianas</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <Heart size={20} className="text-yellow-400" />
-                    <span>Humor criollo y local</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-white/90">
-                    <MapPin size={20} className="text-yellow-400" />
-                    <span>Experiencia cultural única</span>
-                  </div>
-                </div>
-
-                <Link to="/mode-selector?mode=bolivia">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:shadow-2xl text-white font-bold py-4 px-6 rounded-2xl text-center transition-all duration-300"
-                  >
-                    <div className="flex items-center justify-center space-x-3">
-                      <Flag size={24} />
-                      <span>¡Empezar Bolivia!</span>
-                      <ArrowRight size={20} />
-                    </div>
-                  </motion.button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-4"
-        >
-          <motion.div
-            variants={itemVariants}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-gradient">Características Principales</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Todo lo que necesitas para la mejor fiesta de tu vida
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
-              variants={itemVariants}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-2xl p-6 border border-purple-400/30">
-                <div className="text-4xl mb-4">🎲</div>
-                <h3 className="text-xl font-bold mb-3 text-white">Juegos Aleatorios</h3>
-                <p className="text-white/80">
-                  Cada partida es única con selección aleatoria de juegos y turnos dinámicos
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-blue-900 to-cyan-900 rounded-2xl p-6 border border-blue-400/30">
-                <div className="text-4xl mb-4">⚡</div>
-                <h3 className="text-xl font-bold mb-3 text-white">Turnos Dinámicos</h3>
-                <p className="text-white/80">
-                  Los jugadores se seleccionan aleatoriamente para mantener la emoción
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={itemVariants}
-              className="text-center"
-            >
-              <div className="bg-gradient-to-br from-green-900 to-emerald-900 rounded-2xl p-6 border border-green-400/30">
-                <div className="text-4xl mb-4">🎯</div>
-                <h3 className="text-xl font-bold mb-3 text-white">Retos Variados</h3>
-                <p className="text-white/80">
-                  Desde preguntas suaves hasta retos intensos para todos los niveles
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Games Preview Section */}
-      <section className="py-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-6xl mx-auto px-4"
-        >
-          <motion.div
-            variants={itemVariants}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-gradient">Juegos Disponibles</span>
-            </h2>
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Una colección completa de juegos para hacer tu fiesta inolvidable
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {gameTypes.slice(0, 6).map((gameType, index) => (
               <motion.div
-                key={gameType.id}
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                className="bg-white/10 backdrop-blur-sm rounded-xl p-4 text-center border border-white/20"
+                className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-r ${stat.color} flex items-center justify-center text-white text-2xl`}
+                whileHover={{ rotate: 360 }}
+                transition={{ duration: 0.6 }}
               >
-                <div className="text-3xl mb-2">{gameType.icon}</div>
-                <h3 className="font-semibold text-white text-sm">{gameType.name}</h3>
+                <stat.icon className="w-8 h-8" />
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
+              <motion.div 
+                className="text-3xl font-bold text-white mb-2"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                {stat.value}
+              </motion.div>
+              <div className="text-white/80 text-sm font-medium">{stat.label}</div>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
 
-      {/* CTA Section */}
-      <section className="py-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto px-4 text-center"
-        >
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-purple-900 via-pink-900 to-red-900 rounded-3xl p-12 border-2 border-purple-400/30"
+      {/* Features Section Mejorado */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-16"
+      >
+        <div className="text-center mb-12">
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="text-gradient">¿Listo para la Fiesta?</span>
-            </h2>
-            <p className="text-xl text-white/80 mb-8 max-w-2xl mx-auto">
-              Únete a miles de personas que ya han hecho de sus noches algo extraordinario
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/mode-selector">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="btn-primary text-xl px-10 py-5 flex items-center space-x-3 shadow-2xl hover:shadow-3xl"
-                >
-                  <PartyPopper size={28} />
-                  <span>¡Empezar Ahora!</span>
-                  <ArrowRight size={24} />
-                </motion.button>
-              </Link>
-              
-              <Link to="/test">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-bold text-lg px-8 py-5 rounded-2xl flex items-center space-x-3 shadow-2xl hover:shadow-3xl transition-all duration-300"
-                >
-                  <span className="text-2xl">🧪</span>
-                  <span>Probar Sistema</span>
-                </motion.button>
-              </Link>
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
+            ¿Por Qué Elegirnos?
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-white/80 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            Características únicas que hacen de ¡Oh Cañamos? la mejor opción
+          </motion.p>
+        </div>
 
-      {/* Consumption Warning */}
-      <section className="py-8">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="max-w-4xl mx-auto px-4 text-center"
-        >
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-            <p className="text-white/70 text-lg">
-              🍺 <strong>Consumo Responsable:</strong> La diversión es mejor cuando se disfruta con moderación
-            </p>
-          </div>
-        </motion.div>
-      </section>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.02, y: -5 }}
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 group"
+            >
+              <motion.div
+                className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center text-white text-2xl`}
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+              >
+                <feature.icon className="w-8 h-8" />
+              </motion.div>
+              <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
+              <p className="text-white/80 leading-relaxed">{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* Game Categories Section Mejorado */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-16"
+      >
+        <div className="text-center mb-12">
+          <motion.h2 
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            Juegos Disponibles
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-white/80 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            Una colección completa de juegos para todos los gustos y niveles de intensidad
+          </motion.p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {gameCategories.map((category, index) => (
+            <motion.div
+              key={category.title}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05, y: -10 }}
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 group"
+            >
+              <motion.div
+                className={`w-16 h-16 mb-6 rounded-2xl bg-gradient-to-r ${category.color} flex items-center justify-center text-white text-2xl`}
+                whileHover={{ rotate: 360, scale: 1.1 }}
+                transition={{ duration: 0.6 }}
+              >
+                <category.icon className="w-8 h-8" />
+              </motion.div>
+              <h3 className="text-2xl font-bold text-white mb-6">{category.title}</h3>
+              <ul className="space-y-3">
+                {category.games.map((game, gameIndex) => (
+                  <motion.li
+                    key={game}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: gameIndex * 0.1 }}
+                    viewport={{ once: true }}
+                    className="flex items-center gap-3 text-white/90"
+                  >
+                    <motion.div
+                      className="w-2 h-2 bg-yellow-400 rounded-full"
+                      animate={{ scale: [1, 1.5, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: gameIndex * 0.2 }}
+                    />
+                    {game}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+      </motion.section>
+
+      {/* CTA Section Mejorado */}
+      <motion.section
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+        className="py-20 text-center relative overflow-hidden"
+      >
+        {/* Efectos de fondo */}
+        <div className="absolute inset-0">
+          <motion.div
+            className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-400/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-0 right-1/4 w-96 h-96 bg-red-400/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1.5, 1, 1.5],
+              opacity: [0.6, 0.3, 0.6],
+            }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+
+        <div className="relative z-10">
+          <motion.h2 
+            className="text-4xl md:text-6xl font-bold text-white mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            ¿Listo para la Mejor Fiesta?
+          </motion.h2>
+          <motion.p 
+            className="text-xl text-white/90 max-w-2xl mx-auto mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+          >
+            Únete a miles de personas que ya están disfrutando de la experiencia más viral
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <motion.div
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Link
+                to="/mode-selector"
+                className="group relative bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 text-black font-bold py-6 px-12 rounded-full text-2xl shadow-2xl hover:from-yellow-300 hover:via-orange-400 hover:to-red-400 transition-all duration-300 transform hover:-translate-y-2 border-2 border-white/20 overflow-hidden inline-flex items-center gap-3"
+              >
+                {/* Efecto de brillo */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                  animate={{
+                    x: ["-100%", "100%"]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                
+                <span className="relative z-10 flex items-center gap-3">
+                  <PartyPopper className="w-8 h-8" />
+                  ¡Empezar Ahora!
+                  <motion.div
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <ArrowRight className="w-6 h-6" />
+                  </motion.div>
+                </span>
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </motion.section>
     </div>
   )
 }
