@@ -25,7 +25,14 @@ import {
   Target,
   Flame,
   Wine,
-  GlassWater
+  GlassWater,
+  PartyPopper,
+  Camera,
+  Globe,
+  MapPin,
+  Brain,
+  Gamepad2,
+  Flag
 } from 'lucide-react'
 
 interface YoNuncaGameProps {
@@ -63,6 +70,8 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
   const [maxRounds, setMaxRounds] = useState(players.length * 3)
   const [usedQuestions, setUsedQuestions] = useState<number[]>([])
   const [intensity, setIntensity] = useState<'suave' | 'atrevido' | 'picante'>('suave')
+  const [showParticles, setShowParticles] = useState(false)
+  const [hoveredPlayer, setHoveredPlayer] = useState<string | null>(null)
   
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const drinkRef = useRef<HTMLAudioElement | null>(null)
@@ -148,6 +157,25 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
     { id: 60, text: "Yo nunca he 'cañado' con mi 'hermano'", difficulty: 'bolivia', category: 'bolivia-picante' }
   ]
 
+  // Partículas para efectos virales
+  const particles = [
+    { icon: Beer, delay: 0, duration: 8 },
+    { icon: Wine, delay: 1, duration: 10 },
+    { icon: Sparkles, delay: 2, duration: 12 },
+    { icon: Heart, delay: 3, duration: 9 },
+    { icon: Star, delay: 4, duration: 11 },
+    { icon: Crown, delay: 5, duration: 7 },
+    { icon: Flame, delay: 6, duration: 13 },
+    { icon: PartyPopper, delay: 7, duration: 8 },
+    { icon: Camera, delay: 8, duration: 10 },
+    { icon: Gamepad2, delay: 9, duration: 9 },
+    { icon: Globe, delay: 10, duration: 11 },
+    { icon: MapPin, delay: 11, duration: 10 },
+            { icon: Zap, delay: 12, duration: 9 },
+    { icon: Brain, delay: 13, duration: 12 },
+    { icon: Flag, delay: 14, duration: 8 }
+  ]
+
   // Inicializar tragos
   useEffect(() => {
     const initialDrinks: {[key: string]: number} = {}
@@ -192,9 +220,11 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
     setPlayersWhoDrank([])
     setShowQuestion(false)
     setGamePhase('waiting')
+    setShowParticles(true)
+    setTimeout(() => setShowParticles(false), 3000)
   }
 
-  const showQuestion = () => {
+  const revealQuestion = () => {
     setShowQuestion(true)
     setGamePhase('question')
     
@@ -218,6 +248,10 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
     if (soundEnabled && drinkRef.current) {
       drinkRef.current.play()
     }
+
+    // Efecto de confeti para el que bebe
+    setShowConfetti(true)
+    setTimeout(() => setShowConfetti(false), 2000)
   }
 
   const handlePlayerNotDrink = (playerName: string) => {
@@ -288,6 +322,56 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      {/* Efectos de fondo dinámicos */}
+      <div className="absolute inset-0">
+        <motion.div
+          className="absolute top-0 left-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.5, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-0 right-1/4 w-96 h-96 bg-pink-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.5, 1, 1.5],
+            opacity: [0.6, 0.3, 0.6],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+      </div>
+
+      {/* Partículas flotantes */}
+      <AnimatePresence>
+        {showParticles && particles.map((particle, index) => (
+          <motion.div
+            key={index}
+            className="absolute text-white/20 pointer-events-none"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: [0, 0.5, 0],
+              scale: [0, 1, 0],
+              y: [-20, -100],
+              x: [0, Math.random() * 40 - 20],
+              rotate: [0, 360]
+            }}
+            transition={{
+              delay: particle.delay,
+              duration: particle.duration,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <particle.icon size={Math.random() * 30 + 20} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
       <motion.div 
         className="bg-gradient-to-br from-purple-900 via-purple-800 to-pink-700 rounded-3xl p-8 max-w-2xl w-full relative overflow-hidden"
         initial={{ scale: 0.8, y: 50 }}
@@ -295,20 +379,24 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
         exit={{ scale: 0.8, y: 50 }}
       >
         {/* Botón de cerrar */}
-        <button
+        <motion.button
           onClick={onComplete}
-          className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors z-10"
+          className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors z-10 bg-white/10 backdrop-blur-sm rounded-full p-2 hover:bg-white/20"
+          whileHover={{ scale: 1.1, rotate: 90 }}
+          whileTap={{ scale: 0.9 }}
         >
           <X size={24} />
-        </button>
+        </motion.button>
 
         {/* Botón de configuración */}
-        <button
+        <motion.button
           onClick={toggleSettings}
-          className="absolute top-4 left-4 text-white/80 hover:text-white transition-colors z-10"
+          className="absolute top-4 left-4 text-white/80 hover:text-white transition-colors z-10 bg-white/10 backdrop-blur-sm rounded-full p-2 hover:bg-white/20"
+          whileHover={{ scale: 1.1, rotate: -90 }}
+          whileTap={{ scale: 0.9 }}
         >
           <Settings size={24} />
-        </button>
+        </motion.button>
 
         {/* Efectos de partículas virales */}
         <AnimatePresence>
@@ -319,10 +407,10 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {[...Array(25)].map((_, i) => (
+              {[...Array(50)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-2 h-2 bg-purple-400 rounded-full opacity-60"
+                  className="absolute w-2 h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-60"
                   initial={{
                     x: Math.random() * window.innerWidth,
                     y: Math.random() * window.innerHeight,
@@ -332,7 +420,7 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                     x: Math.random() * window.innerWidth,
                     y: Math.random() * window.innerHeight,
                     scale: [0, 1, 0],
-                    opacity: [0, 0.6, 0]
+                    opacity: [0, 0.8, 0]
                   }}
                   transition={{
                     duration: 2 + Math.random() * 2,
@@ -354,7 +442,7 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              {[...Array(35)].map((_, i) => (
+              {[...Array(50)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute text-3xl"
@@ -376,7 +464,7 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                     delay: Math.random() * 0.5
                   }}
                 >
-                  {['🎉', '🎊', '🎈', '🎁', '⭐', '💫', '🌟', '✨', '🍺', '🥂', '🧠', '🔥'][Math.floor(Math.random() * 12)]}
+                  {['🎉', '🎊', '🎈', '🎁', '⭐', '💫', '🌟', '✨', '🍺', '🥂', '🧠', '🔥', '💋', '💕', '💘'][Math.floor(Math.random() * 15)]}
                 </motion.div>
               ))}
             </motion.div>
@@ -399,26 +487,41 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
           </motion.h1>
 
           {/* Información de la ronda */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-6">
+          <motion.div 
+            className="bg-white/10 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/20"
+            whileHover={{ scale: 1.02 }}
+          >
             <div className="flex items-center justify-between text-white mb-2">
               <div className="flex items-center gap-2">
-                <Target className="w-5 h-5" />
+                <motion.div
+                  animate={{ rotate: [0, 360] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                >
+                  <Target className="w-5 h-5" />
+                </motion.div>
                 <span className="font-semibold">Ronda {round}/{maxRounds}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-5 h-5" />
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                >
+                  <Users className="w-5 h-5" />
+                </motion.div>
                 <span className="font-semibold">{players[currentPlayerIndex]}</span>
               </div>
             </div>
             
             {/* Barra de progreso */}
             <div className="w-full bg-white/20 rounded-full h-2">
-              <div 
-                className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full transition-all duration-300"
-                style={{ width: `${(round / maxRounds) * 100}%` }}
-              ></div>
+              <motion.div 
+                className="bg-gradient-to-r from-purple-400 to-pink-400 h-2 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(round / maxRounds) * 100}%` }}
+                transition={{ duration: 0.5 }}
+              ></motion.div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contenido principal */}
           <AnimatePresence mode="wait">
@@ -431,18 +534,50 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                 className="space-y-6"
               >
                 <div className="text-white text-xl">
-                  <div className="font-bold mb-2">¡Turno de {players[currentPlayerIndex]}!</div>
+                  <motion.div 
+                    className="font-bold mb-2"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    ¡Turno de {players[currentPlayerIndex]}!
+                  </motion.div>
                   <div className="opacity-80">Presiona el botón para revelar la pregunta</div>
                 </div>
 
                 <motion.button
-                  onClick={showQuestion}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-6 px-8 rounded-2xl transition-all shadow-lg text-xl"
+                  onClick={revealQuestion}
+                  className="group relative bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-6 px-8 rounded-2xl transition-all shadow-lg text-xl overflow-hidden"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Play className="inline-block w-8 h-8 mr-3" />
-                  ¡Revelar Pregunta!
+                  {/* Efecto de brillo */}
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+                    animate={{
+                      x: ["-100%", "100%"]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  
+                  <span className="relative z-10 flex items-center gap-3">
+                    <motion.div
+                      animate={{ rotate: [0, 360] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    >
+                      <Play className="w-8 h-8" />
+                    </motion.div>
+                    ¡Revelar Pregunta!
+                    <motion.div
+                      animate={{ x: [0, 5, 0] }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                      <Sparkles className="w-6 h-6" />
+                    </motion.div>
+                  </span>
                 </motion.button>
               </motion.div>
             )}
@@ -456,9 +591,13 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                 className="space-y-6"
               >
                 {/* Dificultad */}
-                <div className={`inline-block bg-gradient-to-r ${getDifficultyColor(currentQuestion.difficulty)} text-white px-4 py-2 rounded-full font-bold text-sm`}>
+                <motion.div 
+                  className={`inline-block bg-gradient-to-r ${getDifficultyColor(currentQuestion.difficulty)} text-white px-4 py-2 rounded-full font-bold text-sm`}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                >
                   {getDifficultyText(currentQuestion.difficulty)}
-                </div>
+                </motion.div>
 
                 {/* Pregunta */}
                 <motion.div
@@ -466,10 +605,21 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ delay: 0.3 }}
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="text-3xl font-bold text-white mb-4">
+                  <motion.div 
+                    className="text-3xl font-bold text-white mb-4"
+                    animate={{ 
+                      textShadow: [
+                        "0 0 10px rgba(255,255,255,0.3)",
+                        "0 0 20px rgba(255,255,255,0.6)",
+                        "0 0 10px rgba(255,255,255,0.3)"
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
                     {currentQuestion.text}
-                  </div>
+                  </motion.div>
                   <div className="text-white/80 text-lg">
                     ¡Si lo hiciste, toma un trago! 🍺
                   </div>
@@ -487,12 +637,14 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                           handlePlayerDrink(player)
                         }
                       }}
+                      onHoverStart={() => setHoveredPlayer(player)}
+                      onHoverEnd={() => setHoveredPlayer(null)}
                       className={`p-4 rounded-xl text-center transition-all ${
                         playersWhoDrank.includes(player)
                           ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white font-bold shadow-lg scale-105'
                           : 'bg-gradient-to-r from-white/20 to-white/10 text-white border border-white/20 hover:bg-white/30'
                       }`}
-                      whileHover={{ scale: 1.05 }}
+                      whileHover={{ scale: 1.05, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                     >
                       <div className="font-bold text-lg">{player}</div>
@@ -502,6 +654,40 @@ const YoNuncaGame: React.FC<YoNuncaGameProps> = ({
                       <div className="text-xs opacity-60">
                         {totalDrinks[player] || 0} 🍺
                       </div>
+                      
+                      {/* Efecto de partículas en hover */}
+                      <AnimatePresence>
+                        {hoveredPlayer === player && (
+                          <motion.div
+                            className="absolute inset-0 pointer-events-none"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            {[...Array(5)].map((_, i) => (
+                              <motion.div
+                                key={i}
+                                className="absolute w-1 h-1 bg-yellow-400 rounded-full"
+                                initial={{
+                                  x: "50%",
+                                  y: "50%",
+                                  scale: 0
+                                }}
+                                animate={{
+                                  x: `${Math.random() * 100}%`,
+                                  y: `${Math.random() * 100}%`,
+                                  scale: [0, 1, 0],
+                                  opacity: [0, 0.8, 0]
+                                }}
+                                transition={{
+                                  duration: 1,
+                                  delay: i * 0.1
+                                }}
+                              />
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </motion.button>
                   ))}
                 </div>
